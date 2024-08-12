@@ -1,0 +1,63 @@
+# Replica count for the deployment
+replicaCount: 2
+
+# Image settings
+image:
+  repository: nginx
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+
+# Ingress configuration
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: example.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+# Resources (CPU/Memory requests and limits)
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+# Liveness and readiness probes
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+# Node selector, tolerations, and affinity for scheduling
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Custom environment variables for the application
+env:
+  - name: ENV_VAR
+    value: "default_value"
+
+# Volume mounts and volumes
+volumes: []
+volumeMounts: []
